@@ -1,0 +1,27 @@
+<resources>
+    <string name="app_name">FitPlanTest</string>
+
+    <string name="login_screen_title">Login</string>
+    <string name="plan_list_title">Plan list</string>
+    <string name="plan_details_title">Plan details</string>
+    <string name="settings_title">Settings</string>
+
+    <string name="content_with_images">Enable showing images</string>
+    <string name="loading">Loading&#8230;</string>
+    <string name="logout">Logout</string>
+    <string name="ok">OK</string>
+
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+
+    <string name="wrong_creds">Wrong credentials.</string>
+
+    <string name="connection_error">Connection error</string>
+    <string name="request_error">Request error</string>
+
+    <string name="list_item_text_mask">%s %s\n%s</string>
+    <string name="final_page_text_mask">%s %s</string>
+
+    <string name="press_back_twice">Press Back twice to exit</string>
+
+</resources>

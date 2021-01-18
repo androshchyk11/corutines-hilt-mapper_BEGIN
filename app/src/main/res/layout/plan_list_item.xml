@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        xmlns:binding="http://schemas.android.com/apk/res-auto"
+        xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+                name="planItem"
+                type="ua.oleksii.fitplantest.model.entities.PlanItemEntity" />
+        <variable
+                name="needShowImages"
+                type="Boolean" />
+    </data>
+
+    <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+        <com.google.android.material.card.MaterialCardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:layout_margin="4dp"
+                app:cardBackgroundColor="@color/colorPrimary"
+                app:cardCornerRadius="8dp"
+                app:cardElevation="4dp">
+
+            <FrameLayout
+                    android:id="@+id/planItemContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:clickable="true"
+                    android:focusable="true"
+                    android:foreground="@drawable/list_item_selector">
+
+                <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                    <ImageView
+                            android:id="@+id/planItemImage"
+                            android:layout_width="match_parent"
+                            android:layout_height="200dp"
+                            binding:planItemImageUrl="@{planItem.imageSmallUrl}"
+                            binding:needCenterCrop="@{true}"
+                            binding:needShowImage="@{needShowImages}"/>
+
+                    <TextView
+                            android:id="@+id/planItemText"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_alignBottom="@+id/planItemImage"
+                            android:background="@{needShowImages ? @drawable/gradient_black_from_bottom : null}"
+                            android:gravity="center_horizontal"
+                            android:padding="16dp"
+                            android:textColor="@color/white"
+                            android:text="@{String.format(@string/list_item_text_mask, planItem.athleteFirstName, planItem.athleteLastName, planItem.name)}"
+                            android:textSize="18sp"
+                            tools:text="Trainer name and\nSurname"
+                            tools:background="@drawable/gradient_black_from_bottom"/>
+
+                </RelativeLayout>
+
+            </FrameLayout>
+
+        </com.google.android.material.card.MaterialCardView>
+
+    </FrameLayout>
+
+</layout>
