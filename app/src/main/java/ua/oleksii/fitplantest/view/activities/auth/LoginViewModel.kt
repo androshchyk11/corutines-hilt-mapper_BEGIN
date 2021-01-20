@@ -1,12 +1,17 @@
-package ua.oleksii.fitplantest.viewmodel
+package ua.oleksii.fitplantest.view.activities.auth
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.invoke
 import kotlinx.coroutines.launch
 import ua.oleksii.fitplantest.model.entities.login.LoginResponse
 import ua.oleksii.fitplantest.model.entities.RequestError
 import ua.oleksii.fitplantest.model.entities.login.Login
 import ua.oleksii.fitplantest.repositories.LoginRepository
+import ua.oleksii.fitplantest.utils.DataState
 
 class LoginViewModel @ViewModelInject constructor(
     private val loginRepository: LoginRepository
@@ -16,16 +21,16 @@ class LoginViewModel @ViewModelInject constructor(
     var email = MutableLiveData<String>("test@fitplanapp.com")
     var password = MutableLiveData<String>("fitplan123")
 
-    var inProgress = MutableLiveData<Boolean>()
-    val requestError = MutableLiveData<RequestError>()
-    val successfullyAuthorised = MutableLiveData<Login>()
+    val loginState = MutableLiveData<DataState<Login>>()
 
 
     fun authUser() {
-        viewModelScope.launch {
-             successfullyAuthorised.value =
-                loginRepository.authUser()
+        viewModelScope.launch(Dispatchers.IO) {
+            loginRepository.authUser(email.value ?: "", password.value ?: "").collect {
+                loginState.postValue(it)
+            }
         }
+    }
 
 
 //        if (connectionDetector.isConnected.value != true) {
@@ -63,6 +68,5 @@ class LoginViewModel @ViewModelInject constructor(
 //
 //        }
 
-    }
-
 }
+

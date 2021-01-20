@@ -1,6 +1,16 @@
 package ua.oleksii.fitplantest.utils.mappers
 
-interface LoginMapper<LoginResponse, Login> {
+import ua.oleksii.fitplantest.model.entities.login.Login
+import ua.oleksii.fitplantest.model.entities.login.LoginResponse
+import ua.oleksii.fitplantest.utils.mappers.abstraction.Mapper
+import javax.inject.Inject
 
-    fun loginResponseToLoginEntity(domainModel: LoginResponse): Login
+class LoginMapper @Inject constructor(): Mapper<LoginResponse?, Login> {
+
+
+    override fun loginResponseToLoginEntity(domainModel: LoginResponse?): Login {
+        domainModel?.accessToken.let{
+            return Login(authToken = it.toString())
+        }
+    }
 }
