@@ -31,12 +31,12 @@
         </com.google.android.material.appbar.AppBarLayout>
 
 
+<!--         todo ask for refresh into xml-->
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
                 android:id="@+id/swipeRefreshPlanList"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:refreshing="@{viewmodel.inProgress}"
                 app:onRefreshListener="@{() -> viewmodel.getPlansList()}">
 
             <RelativeLayout

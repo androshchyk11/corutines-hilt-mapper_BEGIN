@@ -1,4 +1,4 @@
-package ua.oleksii.fitplantest.model.entities
+package ua.oleksii.fitplantest.model.entities.planItem
 
 import android.os.Parcelable
 import com.google.gson.annotations.SerializedName

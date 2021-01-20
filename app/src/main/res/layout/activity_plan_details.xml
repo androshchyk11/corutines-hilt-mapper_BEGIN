@@ -1,109 +1,110 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:binding="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:binding="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
+
         <variable
-                name="viewmodel"
-                type="ua.oleksii.fitplantest.viewmodel.PlanDetailsViewModel" />
+            name="viewmodel"
+            type="ua.oleksii.fitplantest.viewmodel.PlanDetailsViewModel" />
+
         <variable
-                name="needShowImages"
-                type="Boolean" />
+            name="entity"
+            type="ua.oleksii.fitplantest.model.entities.planDetails.PlanDetail" />
+
+        <variable
+            name="needShowImages"
+            type="Boolean" />
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:context=".view.activities.PlanListActivity">
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".view.activities.PlanListActivity">
 
         <com.google.android.material.appbar.AppBarLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:theme="@style/AppTheme.AppBarOverlay">
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:theme="@style/AppTheme.AppBarOverlay">
 
             <androidx.appcompat.widget.Toolbar
-                    android:id="@+id/toolbarPlanDetails"
-                    android:layout_width="match_parent"
-                    android:layout_height="?android:attr/actionBarSize"
-                    android:background="@color/colorPrimary"
-                    app:popupTheme="@style/AppTheme.PopupOverlay" />
+                android:id="@+id/toolbarPlanDetails"
+                android:layout_width="match_parent"
+                android:layout_height="?android:attr/actionBarSize"
+                android:background="@color/colorPrimary"
+                app:popupTheme="@style/AppTheme.PopupOverlay" />
 
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-                android:id="@+id/swiperefreshPlandetails"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                app:layout_behavior="@string/appbar_scrolling_view_behavior"
-                app:refreshing="@{viewmodel.inProgress}"
-                app:onRefreshListener="@{() -> viewmodel.getPlansDetails()}">
+            android:id="@+id/swiperefreshPlandetails"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
             <androidx.core.widget.NestedScrollView
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:background="@color/screens_background"
-                    android:scrollbarSize="4dp"
-                    android:scrollbarThumbVertical="@drawable/scrollbar_styled"
-                    android:scrollbars="vertical"
-                    app:layout_behavior="@string/appbar_scrolling_view_behavior">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/screens_background"
+                android:scrollbarSize="4dp"
+                android:scrollbarThumbVertical="@drawable/scrollbar_styled"
+                android:scrollbars="vertical"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
                 <LinearLayout
-                        android:layout_width="match_parent"
-                        android:layout_height="match_parent"
-                        android:orientation="vertical">
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical">
 
                     <ImageView
-                            android:id="@+id/imagePlanDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:adjustViewBounds="true"
-                            binding:planItemImageUrl="@{viewmodel.planDetailsData.imageLargeUrl}"
-                            binding:needCenterCrop="@{false}"
-                            binding:needShowImage="@{needShowImages}"/>
+                        android:id="@+id/imagePlanDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:adjustViewBounds="true"
+                        app:setImage="@{entity.athleteImageUrl}" />
 
                     <TextView
-                            android:id="@+id/titlePlanDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:fontFamily="@font/opensans_semibold"
-                            android:gravity="center"
-                            android:textColor="@color/white"
-                            android:textSize="22sp"
-                            android:text="@{viewmodel.planDetailsData.name}"
-                            tools:text="Plan title" />
+                        android:id="@+id/titlePlanDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:fontFamily="@font/opensans_semibold"
+                        android:gravity="center"
+                        android:text="@{entity.name}"
+                        android:textColor="@color/white"
+                        android:textSize="22sp"
+                        tools:text="Plan title" />
 
                     <TextView
-                            android:id="@+id/trainerNamePlanDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:gravity="start"
-                            android:textColor="@color/white"
-                            android:textSize="19sp"
-                            android:text='@{String.format(@string/final_page_text_mask, viewmodel.planDetailsData.athleteFirstName ?? "", viewmodel.planDetailsData.athleteLastName ?? "")}'
-                            tools:text="Trainer name" />
+                        android:id="@+id/trainerNamePlanDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:gravity="start"
+                        android:text='@{String.format(@string/final_page_text_mask,entity.athleteFirstName, entity.athleteLastName)}'
+                        android:textColor="@color/white"
+                        android:textSize="19sp"
+                        tools:text="Trainer name" />
 
                     <TextView
-                            android:id="@+id/descriptionPlanDetails"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginStart="16dp"
-                            android:layout_marginTop="16dp"
-                            android:layout_marginEnd="16dp"
-                            android:layout_marginBottom="16dp"
-                            android:gravity="start"
-                            android:textColor="@color/white"
-                            android:textSize="17sp"
-                            android:text="@{viewmodel.planDetailsData.description}"
-                            tools:text="DescriptionPlanDetails" />
+                        android:id="@+id/descriptionPlanDetails"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:layout_marginTop="16dp"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginBottom="16dp"
+                        android:gravity="start"
+                        android:text="@{entity.description}"
+                        android:textColor="@color/white"
+                        android:textSize="17sp"
+                        tools:text="DescriptionPlanDetails" />
 
                 </LinearLayout>
 

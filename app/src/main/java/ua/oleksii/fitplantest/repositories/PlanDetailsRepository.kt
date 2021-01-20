@@ -5,40 +5,37 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import ua.oleksii.fitplantest.model.entities.login.Login
+import ua.oleksii.fitplantest.model.entities.planDetails.PlanDetail
+import ua.oleksii.fitplantest.model.entities.planItem.PlanItem
 import ua.oleksii.fitplantest.model.network.ApiRequestService
 import ua.oleksii.fitplantest.utils.DataState
 import ua.oleksii.fitplantest.utils.mappers.NetworkMapper
+import ua.oleksii.fitplantest.utils.mappers.PlanDetailsMapper
+import ua.oleksii.fitplantest.utils.mappers.PlanListMapper
 import java.lang.Exception
 import javax.inject.Inject
 
-
 @Module
 @InstallIn(ActivityRetainedComponent::class)
-class LoginRepository @Inject constructor(
+class PlanDetailsRepository @Inject constructor(
     private val apiRequestService: ApiRequestService,
-    private val networkMapper: NetworkMapper
+    private val planListMapper: PlanDetailsMapper
 ) {
-    private val clientId = "XW9LtUlJfcCHMJbLyLen3lglY4COUgmCQErwjze7"
-    private val clientSecret =
-        "ae55LjKyfVAf9dWaUX9HwoU5tpwHAVn2jKh8Of9zu3TP4zlD7JwguJhDYxXRT9zR2iuOIfHLrNiOAQSyAfRFs6dI7uXE8Yg7l3yyw7NTABnLr94VuPFKUOaaaCZ7xAv3"
-    private val grantType = "password"
 
 
-    // UserName: test@fitplanapp.com
-    // Password: fitplan123
-
-    suspend fun authUser(email:String,password:String): Flow<DataState<Login>> = flow {
+    suspend fun getPlanDetails(id:String? = "23"): Flow<DataState<PlanDetail>> = flow {
         emit(DataState.Loading(true))
+
         try {
-            val response = apiRequestService
-                .login(clientId, clientSecret, grantType, email , password)
+            val response = apiRequestService.getPlanDetails(id?: "")
 
             emit(DataState.Loading(false))
 
-            if(response.isSuccessful){
-                emit(DataState.Success(networkMapper.responseEntityToUiEntity(response.body())))
-            }else{
+            if (response.isSuccessful) {
+                response.body()?.planDetail?.let { it ->
+                    emit(DataState.Success(planListMapper.responseEntityToUiEntity(it)))
+                }
+            } else {
                 emit(DataState.Error(Exception()))
             }
 
@@ -47,4 +44,5 @@ class LoginRepository @Inject constructor(
             emit(DataState.Error(e))
         }
     }
+
 }

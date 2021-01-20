@@ -6,47 +6,37 @@ import android.graphics.Color
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
-import androidx.lifecycle.whenResumed
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
-import androidx.work.WorkRequest
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.activity_plan_list.*
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import ua.oleksii.fitplantest.R
-import ua.oleksii.fitplantest.application.FitPlanApplication
 import ua.oleksii.fitplantest.databinding.ActivityPlanListBinding
 import ua.oleksii.fitplantest.eventbus.MessageEventBus
 import ua.oleksii.fitplantest.eventbus.eventmodels.ShowingImagesOptionEvent
 import ua.oleksii.fitplantest.interfaces.OnRecyclerItemClickListener
 import ua.oleksii.fitplantest.managers.ConnectionManager
 import ua.oleksii.fitplantest.managers.SharedPreferencesManager
-import ua.oleksii.fitplantest.model.entities.PlanItemEntity
-import ua.oleksii.fitplantest.model.entities.RequestError
-import ua.oleksii.fitplantest.model.network.ApiRequestService
+import ua.oleksii.fitplantest.model.entities.login.Login
+import ua.oleksii.fitplantest.model.entities.planItem.PlanItem
+import ua.oleksii.fitplantest.model.entities.planItem.PlanItemEntity
 import ua.oleksii.fitplantest.services.TestService
+import ua.oleksii.fitplantest.utils.DataState
 import ua.oleksii.fitplantest.utils.FitAppLogger
 import ua.oleksii.fitplantest.utils.extensions.showToast
 import ua.oleksii.fitplantest.view.adapters.recyclerview.PlansAdapter
 import ua.oleksii.fitplantest.viewmodel.PlanListViewModel
 import ua.oleksii.fitplantest.workers.TestWorker
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 @AndroidEntryPoint
 class PlanListActivity : BaseActivity(), OnRecyclerItemClickListener {
@@ -64,7 +54,7 @@ class PlanListActivity : BaseActivity(), OnRecyclerItemClickListener {
 
     private val viewModel: PlanListViewModel by viewModels()
 
-    private var plansList: ArrayList<PlanItemEntity>? = null
+    private var plansList: ArrayList<PlanItem>? = null
     private var connectionSnackbar: Snackbar? = null
 
     private var backPressedOnce = false
@@ -162,19 +152,21 @@ class PlanListActivity : BaseActivity(), OnRecyclerItemClickListener {
 
     private fun setupViewModelCallbacks() {
         viewModel.apply {
-
-            requestError.observe(this@PlanListActivity, {
-                it?.let {
-                    showErrorMessage(it) { requestError.value = null }
+            planItemsDataState.observe(this@PlanListActivity) { planItemState ->
+                when (planItemState) {
+                    is DataState.Success<List<PlanItem>> -> {
+                        plansList?.clear()
+                        plansList?.addAll(planItemState.data)
+                        plansAdapter.notifyDataSetChanged()
+                    }
+                    is DataState.Loading -> {
+                        applicationContext.showToast("Loading")
+                    }
+                    is DataState.Error -> {
+                        applicationContext.showToast(planItemState.exception.message.toString())
+                    }
                 }
-            })
-
-            planItemsData.observe(this@PlanListActivity, {
-                plansList?.clear()
-                plansList?.addAll(it)
-                plansAdapter.notifyDataSetChanged()
-            })
-
+            }
         }
     }
 

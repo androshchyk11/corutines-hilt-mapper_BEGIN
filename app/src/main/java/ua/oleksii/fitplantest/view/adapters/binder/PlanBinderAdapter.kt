@@ -36,3 +36,14 @@ fun ImageView.setPlanListImageUrl(imageUrl: String?, needCenterCrop: Boolean? = 
         this.visibility = View.GONE
     }
 }
+
+@BindingAdapter("app:setImage")
+fun ImageView.setImage(imageUrl: String?) {
+    if (!imageUrl.isNullOrEmpty()) {
+        this.setImageUrl(imageUrl)
+        this.visibility = View.VISIBLE
+    } else {
+        this.setImageDrawable(null)
+        this.visibility = View.GONE
+    }
+}

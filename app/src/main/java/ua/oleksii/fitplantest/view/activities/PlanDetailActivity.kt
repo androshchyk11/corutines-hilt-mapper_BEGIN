@@ -17,7 +17,11 @@ import ua.oleksii.fitplantest.databinding.ActivityPlanDetailsBinding
 import ua.oleksii.fitplantest.eventbus.MessageEventBus
 import ua.oleksii.fitplantest.eventbus.eventmodels.ShowingImagesOptionEvent
 import ua.oleksii.fitplantest.managers.SharedPreferencesManager
+import ua.oleksii.fitplantest.model.entities.planDetails.PlanDetail
+import ua.oleksii.fitplantest.model.entities.planItem.PlanItem
+import ua.oleksii.fitplantest.utils.DataState
 import ua.oleksii.fitplantest.utils.FitAppLogger
+import ua.oleksii.fitplantest.utils.extensions.showToast
 import ua.oleksii.fitplantest.view.adapters.recyclerview.PlansAdapter
 import ua.oleksii.fitplantest.viewmodel.PlanDetailsViewModel
 import javax.inject.Inject
@@ -59,7 +63,7 @@ class PlanDetailActivity : BaseActivity() {
 
         if (viewModel.planId.value.isNullOrEmpty()) {
             viewModel.planId.value = planId
-            viewModel.getPlansDetails()
+            viewModel.getPlansDetails(planId.toString())
         }
 
         FitAppLogger.showLog(
@@ -114,11 +118,25 @@ class PlanDetailActivity : BaseActivity() {
     private fun setupViewModelCallbacks() {
         viewModel.apply {
 
-            requestError.observe(this@PlanDetailActivity, Observer {
-                it?.let {
-                    showErrorMessage(it, View.OnClickListener { requestError.value = null })
+            planDetailsDataState.observe(this@PlanDetailActivity) { dataState ->
+                when (dataState) {
+                    is DataState.Success<PlanDetail> -> {
+                        binding.entity = dataState.data
+                    }
+                    is DataState.Loading -> {
+                        applicationContext.showToast("Loading")
+                    }
+                    is DataState.Error -> {
+                        applicationContext.showToast(dataState.exception.message.toString())
+                    }
                 }
-            })
+            }
+
+//            requestError.observe(this@PlanDetailActivity, Observer {
+//                it?.let {
+//                    showErrorMessage(it, View.OnClickListener { requestError.value = null })
+//                }
+//            })
 
         }
     }

@@ -3,8 +3,8 @@ package ua.oleksii.fitplantest.model.network
 import retrofit2.Response
 import retrofit2.http.*
 import ua.oleksii.fitplantest.model.entities.login.LoginResponse
-import ua.oleksii.fitplantest.model.entities.PlanDetailResponse
-import ua.oleksii.fitplantest.model.entities.PlanListResponse
+import ua.oleksii.fitplantest.model.entities.planDetails.PlanDetailResponse
+import ua.oleksii.fitplantest.model.entities.planItem.PlanListResponse
 
 /**
  * Created by AlexLampa on 30.05.2018.

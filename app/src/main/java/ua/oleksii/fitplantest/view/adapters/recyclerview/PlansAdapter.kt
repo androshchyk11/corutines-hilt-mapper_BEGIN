@@ -7,14 +7,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding3.view.clicks
 import dagger.hilt.android.qualifiers.ActivityContext
-import dagger.hilt.android.scopes.ActivityRetainedScoped
-import dagger.hilt.android.scopes.ActivityScoped
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.subscribeBy
 import kotlinx.android.synthetic.main.plan_list_item.view.*
 import ua.oleksii.fitplantest.databinding.PlanListItemBinding
 import ua.oleksii.fitplantest.interfaces.OnRecyclerItemClickListener
-import ua.oleksii.fitplantest.model.entities.PlanItemEntity
+import ua.oleksii.fitplantest.model.entities.planItem.PlanItem
+import ua.oleksii.fitplantest.model.entities.planItem.PlanItemEntity
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -22,7 +21,7 @@ class PlansAdapter @Inject constructor(
     @ActivityContext private val context: Context
 ) : RecyclerView.Adapter<PlansAdapter.PlansViewHolder>() {
 
-    var planItems: List<PlanItemEntity>? = null
+    var planItems: List<PlanItem>? = null
     var listener: OnRecyclerItemClickListener? = null
     var isWithImages: Boolean = true
 
@@ -49,7 +48,7 @@ class PlansAdapter @Inject constructor(
     override fun getItemCount(): Int = planItems?.size ?: 0
 
     inner class PlansViewHolder constructor(private val binding: PlanListItemBinding) : RecyclerView.ViewHolder(binding.root) {
-        fun bind(planItemEntity: PlanItemEntity?) {
+        fun bind(planItemEntity: PlanItem?) {
             binding.needShowImages = isWithImages
             binding.planItem = planItemEntity
             binding.executePendingBindings()

@@ -7,7 +7,7 @@
     <data>
         <variable
                 name="planItem"
-                type="ua.oleksii.fitplantest.model.entities.PlanItemEntity" />
+                type="ua.oleksii.fitplantest.model.entities.planItem.PlanItem" />
         <variable
                 name="needShowImages"
                 type="Boolean" />
