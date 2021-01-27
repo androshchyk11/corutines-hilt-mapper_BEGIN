@@ -21,6 +21,7 @@ import ua.oleksii.fitplantest.model.network.AuthInterceptor
 import ua.oleksii.fitplantest.model.network.NetworkUrls
 import ua.oleksii.fitplantest.model.network.cache.OfflineCacheInterceptor
 import ua.oleksii.fitplantest.model.network.cache.OnlineCacheInterceptor
+import ua.oleksii.fitplantest.utils.DataStoreManager
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
@@ -72,5 +73,7 @@ class NetworkModule {
     @Provides
     fun provideApiRequestService(retrofit: Retrofit): ApiRequestService = retrofit.create(ApiRequestService::class.java)
 
+    @Provides
+    fun getDataStoreManager(@ApplicationContext context:Context):DataStoreManager = DataStoreManager(context)
 
 }

@@ -46,12 +46,9 @@ class ConnectionManager @Inject constructor(@ApplicationContext context: Context
             if (Build.VERSION.SDK_INT < Build.VERSION_CODES.N
                 && intent?.action == "android.net.conn.CONNECTIVITY_CHANGE"
             ) { // pre nougat versions only!
-
                 isConnected.postValue(isAvailableConnection())
-
             }
         }
-
     }
 
     @Suppress("DEPRECATION")

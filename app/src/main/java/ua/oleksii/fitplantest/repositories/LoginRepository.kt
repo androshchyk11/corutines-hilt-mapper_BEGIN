@@ -1,5 +1,6 @@
 package ua.oleksii.fitplantest.repositories
 
+import android.content.Context
 import dagger.Module
 import dagger.hilt.InstallIn
 import dagger.hilt.android.components.ActivityRetainedComponent
@@ -8,6 +9,7 @@ import kotlinx.coroutines.flow.flow
 import ua.oleksii.fitplantest.model.entities.login.Login
 import ua.oleksii.fitplantest.model.network.ApiRequestService
 import ua.oleksii.fitplantest.utils.DataState
+import ua.oleksii.fitplantest.utils.DataStoreManager
 import ua.oleksii.fitplantest.utils.mappers.NetworkMapper
 import java.lang.Exception
 import javax.inject.Inject
@@ -28,17 +30,32 @@ class LoginRepository @Inject constructor(
     // UserName: test@fitplanapp.com
     // Password: fitplan123
 
-    suspend fun authUser(email:String,password:String): Flow<DataState<Login>> = flow {
+    @Inject
+    lateinit var  dataStoreManager : DataStoreManager
+
+    // how to check accessToken with dataStore
+    suspend fun getUserAccessToken(): String {
+        return if (dataStoreManager.getAccessToken(DataStoreManager.PreferenceKeys.TOKEN)
+                .isNotEmpty()
+        ) {
+            dataStoreManager.getAccessToken(DataStoreManager.PreferenceKeys.TOKEN)
+        } else {
+            ""
+        }
+    }
+
+    suspend fun authUser(email: String, password: String): Flow<DataState<Login>> = flow {
         emit(DataState.Loading(true))
         try {
             val response = apiRequestService
-                .login(clientId, clientSecret, grantType, email , password)
+                .login(clientId, clientSecret, grantType, email, password)
 
             emit(DataState.Loading(false))
 
-            if(response.isSuccessful){
+            if (response.isSuccessful) {
                 emit(DataState.Success(networkMapper.responseEntityToUiEntity(response.body())))
-            }else{
+                dataStoreManager.saveAccessToken(response.body()?.accessToken.toString())
+            } else {
                 emit(DataState.Error(Exception()))
             }
 

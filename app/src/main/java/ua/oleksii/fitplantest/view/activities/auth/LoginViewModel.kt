@@ -12,6 +12,7 @@ import ua.oleksii.fitplantest.model.entities.RequestError
 import ua.oleksii.fitplantest.model.entities.login.Login
 import ua.oleksii.fitplantest.repositories.LoginRepository
 import ua.oleksii.fitplantest.utils.DataState
+import ua.oleksii.fitplantest.utils.DataStoreManager
 
 class LoginViewModel @ViewModelInject constructor(
     private val loginRepository: LoginRepository
@@ -22,7 +23,13 @@ class LoginViewModel @ViewModelInject constructor(
     var password = MutableLiveData<String>("fitplan123")
 
     val loginState = MutableLiveData<DataState<Login>>()
+    val accessToken = MutableLiveData<String>()
 
+    fun checkToken(){
+        viewModelScope.launch(Dispatchers.IO) {
+            accessToken.postValue(loginRepository.getUserAccessToken())
+        }
+    }
 
     fun authUser() {
         viewModelScope.launch(Dispatchers.IO) {

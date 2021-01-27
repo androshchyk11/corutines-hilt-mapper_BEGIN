@@ -152,7 +152,7 @@ class PlanListActivity : BaseActivity(), OnRecyclerItemClickListener {
 
     private fun setupViewModelCallbacks() {
         viewModel.apply {
-            planItemsDataState.observe(this@PlanListActivity) { planItemState ->
+            planItemsDataState.observe(this@PlanListActivity,Observer { planItemState ->
                 when (planItemState) {
                     is DataState.Success<List<PlanItem>> -> {
                         plansList?.clear()
@@ -166,7 +166,7 @@ class PlanListActivity : BaseActivity(), OnRecyclerItemClickListener {
                         applicationContext.showToast(planItemState.exception.message.toString())
                     }
                 }
-            }
+            })
         }
     }
 

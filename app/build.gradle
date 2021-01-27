@@ -118,5 +118,8 @@ dependencies {
     debugImplementation 'com.readystatesoftware.chuck:library:1.1.0'
     releaseImplementation 'com.readystatesoftware.chuck:library-no-op:1.1.0'
 
+    // DataStore
+    implementation "androidx.datastore:datastore-preferences:1.0.0-alpha06"
+
 }
 apply plugin: 'com.google.gms.google-services'

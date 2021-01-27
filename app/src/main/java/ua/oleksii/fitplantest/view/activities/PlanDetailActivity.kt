@@ -118,7 +118,7 @@ class PlanDetailActivity : BaseActivity() {
     private fun setupViewModelCallbacks() {
         viewModel.apply {
 
-            planDetailsDataState.observe(this@PlanDetailActivity) { dataState ->
+            planDetailsDataState.observe(this@PlanDetailActivity,Observer  { dataState ->
                 when (dataState) {
                     is DataState.Success<PlanDetail> -> {
                         binding.entity = dataState.data
@@ -130,7 +130,7 @@ class PlanDetailActivity : BaseActivity() {
                         applicationContext.showToast(dataState.exception.message.toString())
                     }
                 }
-            }
+            })
 
 //            requestError.observe(this@PlanDetailActivity, Observer {
 //                it?.let {

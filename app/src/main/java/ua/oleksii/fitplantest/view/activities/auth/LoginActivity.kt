@@ -6,6 +6,7 @@ import android.util.Patterns
 import androidx.activity.viewModels
 import androidx.core.widget.doAfterTextChanged
 import androidx.databinding.DataBindingUtil
+import androidx.lifecycle.Observer
 import com.afollestad.materialdialogs.MaterialDialog
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.android.synthetic.main.activity_login.*
@@ -34,15 +35,17 @@ class LoginActivity : BaseActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        if (!sharedPreferencesManager.userAccessToken.isNullOrEmpty()) {
-            goToPlansListActivity()
-            return
-        }
+
+//
+//        if (!sharedPreferencesManager.userAccessToken.isNullOrEmpty()) {
+//            goToPlansListActivity()
+//            return
+//        }
 
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login)
         binding.lifecycleOwner = this
         binding.viewmodel = viewModel
-
+        viewModel.checkToken()
         FitAppLogger.showLog(
             "LoginActivity SharedPreferencesManager hashcode ${sharedPreferencesManager.hashCode()}" +
                     " LoginViewModel hashcode ${viewModel.hashCode()}"
@@ -66,7 +69,7 @@ class LoginActivity : BaseActivity() {
 
     private fun setupViewModelCallbacks() {
         viewModel.apply {
-            loginState.observe(this@LoginActivity) { loginState ->
+            loginState.observe(this@LoginActivity, Observer {   loginState ->
                 when (loginState) {
                     is DataState.Success<Login> -> {
                         loginState.data.authToken?.let { token ->
@@ -81,7 +84,12 @@ class LoginActivity : BaseActivity() {
                         applicationContext.showToast(loginState.exception.message.toString())
                     }
                 }
-            }
+            })
+            accessToken.observe(this@LoginActivity,Observer{
+                if(it.isNotEmpty()){
+                    goToPlansListActivity()
+                }
+            })
         }
     }
 
