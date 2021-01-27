@@ -11,6 +11,7 @@ import ua.oleksii.fitplantest.eventbus.MessageEventBus
 import ua.oleksii.fitplantest.eventbus.eventmodels.ShowingImagesOptionEvent
 import ua.oleksii.fitplantest.managers.SharedPreferencesManager
 import ua.oleksii.fitplantest.utils.glide.GlideApp
+import ua.oleksii.fitplantest.view.activities.abstraction.BaseActivity
 import ua.oleksii.fitplantest.view.activities.auth.LoginActivity
 import javax.inject.Inject
 

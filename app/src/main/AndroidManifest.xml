@@ -24,9 +24,9 @@
             </intent-filter>
         </activity>
 
-        <activity android:name=".view.activities.PlanListActivity" />
+        <activity android:name=".view.activities.planList.PlanListActivity" />
 
-        <activity android:name=".view.activities.PlanDetailActivity" />
+        <activity android:name=".view.activities.planDetails.PlanDetailActivity" />
 
         <activity android:name=".view.activities.SettingsActivity" />
 

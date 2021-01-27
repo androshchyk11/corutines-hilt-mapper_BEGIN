@@ -8,7 +8,7 @@
 
         <variable
             name="viewmodel"
-            type="ua.oleksii.fitplantest.viewmodel.PlanDetailsViewModel" />
+            type="ua.oleksii.fitplantest.view.activities.planDetails.PlanDetailsViewModel" />
 
         <variable
             name="entity"
@@ -22,7 +22,7 @@
     <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".view.activities.PlanListActivity">
+        tools:context=".view.activities.planList.PlanListActivity">
 
         <com.google.android.material.appbar.AppBarLayout
             android:layout_width="match_parent"

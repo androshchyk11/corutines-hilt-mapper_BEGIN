@@ -1,11 +1,8 @@
 package ua.oleksii.fitplantest.utils.mappers
 
-import com.google.gson.annotations.SerializedName
-import ua.oleksii.fitplantest.model.entities.login.Login
-import ua.oleksii.fitplantest.model.entities.login.LoginResponse
 import ua.oleksii.fitplantest.model.entities.planItem.PlanItem
 import ua.oleksii.fitplantest.model.entities.planItem.PlanItemEntity
-import ua.oleksii.fitplantest.utils.mappers.abstraction.Mapper
+import ua.oleksii.fitplantest.utils.Mapper
 import javax.inject.Inject
 
 class PlanListMapper @Inject constructor() : Mapper<PlanItemEntity?, PlanItem> {

@@ -1,4 +1,4 @@
-package ua.oleksii.fitplantest.viewmodel
+package ua.oleksii.fitplantest.view.activities.planDetails
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel

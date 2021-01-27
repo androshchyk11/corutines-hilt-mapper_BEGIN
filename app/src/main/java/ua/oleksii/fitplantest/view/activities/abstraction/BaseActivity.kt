@@ -1,4 +1,4 @@
-package ua.oleksii.fitplantest.view.activities
+package ua.oleksii.fitplantest.view.activities.abstraction
 
 import android.os.Bundle
 import android.view.View

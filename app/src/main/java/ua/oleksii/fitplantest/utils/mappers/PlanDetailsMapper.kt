@@ -2,7 +2,7 @@ package ua.oleksii.fitplantest.utils.mappers
 
 import ua.oleksii.fitplantest.model.entities.planDetails.PlanDetail
 import ua.oleksii.fitplantest.model.entities.planDetails.PlanDetailEntity
-import ua.oleksii.fitplantest.utils.mappers.abstraction.Mapper
+import ua.oleksii.fitplantest.utils.Mapper
 import javax.inject.Inject
 
 class PlanDetailsMapper @Inject constructor() : Mapper<PlanDetailEntity?, PlanDetail> {

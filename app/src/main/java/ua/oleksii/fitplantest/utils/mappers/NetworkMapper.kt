@@ -2,7 +2,7 @@ package ua.oleksii.fitplantest.utils.mappers
 
 import ua.oleksii.fitplantest.model.entities.login.Login
 import ua.oleksii.fitplantest.model.entities.login.LoginResponse
-import ua.oleksii.fitplantest.utils.mappers.abstraction.Mapper
+import ua.oleksii.fitplantest.utils.Mapper
 import javax.inject.Inject
 
 class NetworkMapper @Inject constructor(): Mapper<LoginResponse?, Login> {

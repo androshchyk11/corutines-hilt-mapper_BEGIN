@@ -1,4 +1,4 @@
-package ua.oleksii.fitplantest.view.activities
+package ua.oleksii.fitplantest.view.activities.planList
 
 import android.annotation.SuppressLint
 import android.content.Intent
@@ -26,15 +26,15 @@ import ua.oleksii.fitplantest.eventbus.eventmodels.ShowingImagesOptionEvent
 import ua.oleksii.fitplantest.interfaces.OnRecyclerItemClickListener
 import ua.oleksii.fitplantest.managers.ConnectionManager
 import ua.oleksii.fitplantest.managers.SharedPreferencesManager
-import ua.oleksii.fitplantest.model.entities.login.Login
 import ua.oleksii.fitplantest.model.entities.planItem.PlanItem
-import ua.oleksii.fitplantest.model.entities.planItem.PlanItemEntity
 import ua.oleksii.fitplantest.services.TestService
 import ua.oleksii.fitplantest.utils.DataState
 import ua.oleksii.fitplantest.utils.FitAppLogger
 import ua.oleksii.fitplantest.utils.extensions.showToast
+import ua.oleksii.fitplantest.view.activities.abstraction.BaseActivity
+import ua.oleksii.fitplantest.view.activities.planDetails.PlanDetailActivity
+import ua.oleksii.fitplantest.view.activities.SettingsActivity
 import ua.oleksii.fitplantest.view.adapters.recyclerview.PlansAdapter
-import ua.oleksii.fitplantest.viewmodel.PlanListViewModel
 import ua.oleksii.fitplantest.workers.TestWorker
 import javax.inject.Inject
 

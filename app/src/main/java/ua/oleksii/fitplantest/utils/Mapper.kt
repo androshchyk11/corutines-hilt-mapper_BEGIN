@@ -1,4 +1,4 @@
-package ua.oleksii.fitplantest.utils.mappers.abstraction
+package ua.oleksii.fitplantest.utils
 
 interface Mapper<ResponseEntity, Entity> {
 

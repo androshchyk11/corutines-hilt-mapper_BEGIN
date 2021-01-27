@@ -1,11 +1,9 @@
-package ua.oleksii.fitplantest.view.activities
+package ua.oleksii.fitplantest.view.activities.planDetails
 
 import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
-import android.view.View
-import androidx.activity.viewModels
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
@@ -18,12 +16,12 @@ import ua.oleksii.fitplantest.eventbus.MessageEventBus
 import ua.oleksii.fitplantest.eventbus.eventmodels.ShowingImagesOptionEvent
 import ua.oleksii.fitplantest.managers.SharedPreferencesManager
 import ua.oleksii.fitplantest.model.entities.planDetails.PlanDetail
-import ua.oleksii.fitplantest.model.entities.planItem.PlanItem
 import ua.oleksii.fitplantest.utils.DataState
 import ua.oleksii.fitplantest.utils.FitAppLogger
 import ua.oleksii.fitplantest.utils.extensions.showToast
+import ua.oleksii.fitplantest.view.activities.abstraction.BaseActivity
+import ua.oleksii.fitplantest.view.activities.SettingsActivity
 import ua.oleksii.fitplantest.view.adapters.recyclerview.PlansAdapter
-import ua.oleksii.fitplantest.viewmodel.PlanDetailsViewModel
 import javax.inject.Inject
 
 @AndroidEntryPoint

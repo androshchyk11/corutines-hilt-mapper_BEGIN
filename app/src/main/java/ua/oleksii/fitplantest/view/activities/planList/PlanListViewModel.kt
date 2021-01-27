@@ -1,4 +1,4 @@
-package ua.oleksii.fitplantest.viewmodel
+package ua.oleksii.fitplantest.view.activities.planList
 
 import androidx.hilt.lifecycle.ViewModelInject
 import androidx.lifecycle.MutableLiveData

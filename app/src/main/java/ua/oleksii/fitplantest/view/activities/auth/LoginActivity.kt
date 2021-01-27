@@ -18,8 +18,8 @@ import ua.oleksii.fitplantest.utils.DataState
 import ua.oleksii.fitplantest.utils.FitAppLogger
 import ua.oleksii.fitplantest.utils.extensions.generateProgressDialog
 import ua.oleksii.fitplantest.utils.extensions.showToast
-import ua.oleksii.fitplantest.view.activities.BaseActivity
-import ua.oleksii.fitplantest.view.activities.PlanListActivity
+import ua.oleksii.fitplantest.view.activities.abstraction.BaseActivity
+import ua.oleksii.fitplantest.view.activities.planList.PlanListActivity
 import javax.inject.Inject
 
 @AndroidEntryPoint
